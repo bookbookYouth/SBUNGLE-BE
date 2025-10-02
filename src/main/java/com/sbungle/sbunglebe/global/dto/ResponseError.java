@@ -1,0 +1,18 @@
+package com.sbungle.sbunglebe.global.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+public record ResponseError(
+        String path,
+        String messageDetail,
+        String errorDetail
+) {
+
+    @Builder
+    public ResponseError(String path, String messageDetail, String errorDetail) {
+        this.path = path;
+        this.messageDetail = messageDetail;
+        this.errorDetail = errorDetail;
+    }
+}
