@@ -20,8 +20,8 @@ public class Book extends BaseTimeEntity {
     @Column(name = "book_id", unique = true)
     private String bookId;
 
-    @Column(name = "recommendation")
-    private String recommendation;  // 추천대상 ex. 내리는 금값 지금이 매수 시점일까?
+    @Column(name = "book_title")
+    private String title;  // 추천대상 ex. 내리는 금값 지금이 매수 시점일까?
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
