@@ -25,7 +25,7 @@ public class OnboardController {
 
     private final OnboardService onboardService;
 
-    @Operation(summary = "온보딩 - 성별, 나이")
+    @Operation(summary = "온보딩 1 - 성별, 나이")
     @PostMapping("/first")
     public ResponseEntity<OnboardUserResponse> firstStep(
             @AuthenticationPrincipal User currentUser,
@@ -38,7 +38,7 @@ public class OnboardController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "온보딩2 - 좋아하는 장르")
+    @Operation(summary = "온보딩 2 - 좋아하는 장르")
     @PostMapping("/second")
     public ResponseEntity<OnboardUserResponse> secondStep(
             @AuthenticationPrincipal User currentUser,
@@ -51,7 +51,7 @@ public class OnboardController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "온보딩3 - 취향")
+    @Operation(summary = "온보딩 3 - 취향")
     @PostMapping("/third")
     public ResponseEntity<OnboardUserResponse> thirdStep(
             @AuthenticationPrincipal User currentUser,
