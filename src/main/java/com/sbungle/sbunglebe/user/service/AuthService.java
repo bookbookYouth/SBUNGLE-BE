@@ -64,7 +64,7 @@ public class AuthService {
 
         refreshTokenRedisService.saveRefreshToken(userId, refreshToken, REFRESH_TOKEN_EXPIRE_TIME);
 
-        return TOKEN_PREFIX + accessToken;
+        return accessToken;
     }
 
 
