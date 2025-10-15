@@ -27,6 +27,13 @@ spring:
 etc:
   base-url: ${BASE_URL}
   front-url: ${FRONT_URL}
+  front-auth-success: ${FRONT_URL}/auth/success
+  google-profile-url: https://www.googleapis.com/userinfo/v2/me
+  kakao-profile-url: https://kapi.kakao.com/v2/user/me
+  kakao-token-url: https://kauth.kakao.com/oauth/token
+  kakao:
+    client-id: ${KAKAO_CLIENT}
+    redirect-uri: ${BASE_URL}/auth/v1/login/kakao
 
 jwt:
   expiration:
@@ -34,3 +41,10 @@ jwt:
     refresh: ${REFRESH_EXPIRATION}
   secret: ${JWT_SECRET}
 
+server:
+  servlet:
+    session:
+      cookie:
+        same-site: none
+        secure: true
+        http-only: true
