@@ -1,9 +1,9 @@
 package com.sbungle.sbunglebe.user.domain;
 
-import com.sbungle.sbunglebe.user.domain.enums.Role;
-import com.sbungle.sbunglebe.user.domain.enums.SocialLoginType;
+import com.sbungle.sbunglebe.user.domain.enums.*;
 import com.sbungle.sbunglebe.user.dto.response.KakaoResourceServerResponse;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +47,13 @@ public class UserEntity {
     @Enumerated(STRING)
     SocialLoginType socialLoginType = SocialLoginType.NONE;
 
+    @Enumerated(STRING)
+    private Gender gender;
+    private Integer age;
+    @Enumerated(STRING)
+    private PreferredGenre preferredGenre;
+    @Enumerated(STRING)
+    private PreferredType preferredType;
 
 
     public static UserEntity fromKakaoResponse(KakaoResourceServerResponse serverResponse) {
@@ -58,7 +65,7 @@ public class UserEntity {
 
                 .socialLoginType(SocialLoginType.KAKAO)
                 .role(Role.USER)
-                .enabled(false)
+                .enabled(true)
                 .build();
     }
 
@@ -78,4 +85,17 @@ public class UserEntity {
     }
 
 
+    public void updateGenderAndAge(Gender gender, int age) {
+        this.gender = gender;
+        this.age = age;
+    }
+
+    public void updatePreferredGenre(PreferredGenre preferredGenre) {
+        this.preferredGenre = preferredGenre;
+    }
+
+
+    public void updatePreferredType(PreferredType preferredType) {
+        this.preferredType = preferredType;
+    }
 }

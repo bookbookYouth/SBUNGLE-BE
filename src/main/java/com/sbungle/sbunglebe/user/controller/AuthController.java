@@ -19,7 +19,8 @@ public class AuthController {
     private final AuthService authService;
 
 
-    @PostMapping("/login/kakao")
+    @GetMapping("/login/kakao")
+//    @PostMapping("/login/kakao")
     public ResponseEntity<SocialLoginResponse> kakaoLogin(
             @RequestParam("code") String accessCode,
             HttpServletResponse response
