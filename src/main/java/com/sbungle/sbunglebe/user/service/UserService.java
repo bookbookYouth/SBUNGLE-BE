@@ -1,6 +1,7 @@
 package com.sbungle.sbunglebe.user.service;
 
 import com.sbungle.sbunglebe.user.domain.UserEntity;
+import com.sbungle.sbunglebe.user.dto.response.DetailUserInfoResponse;
 import com.sbungle.sbunglebe.user.exception.AuthenticationErrorCode;
 import com.sbungle.sbunglebe.user.exception.AuthenticationException;
 import com.sbungle.sbunglebe.user.repository.UserRepository;
@@ -25,6 +26,11 @@ public class UserService {
     public UserEntity findUserByIdOrThrow(String userId) {
         return userRepository.findByUserId(userId)
                              .orElseThrow(() -> new AuthenticationException(AuthenticationErrorCode.USER_NOT_FOUND));
+    }
+
+    public DetailUserInfoResponse getUserInfo(String userId) {
+        UserEntity user = findUserByIdOrThrow(userId);
+        return DetailUserInfoResponse.from(user);
     }
 
 }

@@ -3,7 +3,7 @@ package com.sbungle.sbunglebe.user.controller;
 import com.sbungle.sbunglebe.user.dto.request.OnboardFirstRequest;
 import com.sbungle.sbunglebe.user.dto.request.OnboardSecondRequest;
 import com.sbungle.sbunglebe.user.dto.request.OnboardThirdRequest;
-import com.sbungle.sbunglebe.user.dto.response.OnboardUserResponse;
+import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
 import com.sbungle.sbunglebe.user.service.OnboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -27,40 +27,40 @@ public class OnboardController {
 
     @Operation(summary = "온보딩 1 - 성별, 나이")
     @PostMapping("/first")
-    public ResponseEntity<OnboardUserResponse> firstStep(
+    public ResponseEntity<SimpleUserInfoResponse> firstStep(
             @AuthenticationPrincipal User currentUser,
             @Valid@RequestBody OnboardFirstRequest request
     ) {
         String userId = currentUser.getUsername();
         log.debug("온보딩 첫번째 userID: {}", userId);
 
-        OnboardUserResponse response = onboardService.updateGenderAge(userId, request.gender(), request.age());
+        SimpleUserInfoResponse response = onboardService.updateGenderAge(userId, request.gender(), request.age());
         return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "온보딩 2 - 좋아하는 장르")
     @PostMapping("/second")
-    public ResponseEntity<OnboardUserResponse> secondStep(
+    public ResponseEntity<SimpleUserInfoResponse> secondStep(
             @AuthenticationPrincipal User currentUser,
             @Valid @RequestBody OnboardSecondRequest request
     ) {
         String userId = currentUser.getUsername();
         log.debug("온보딩 두번째 userID: {}", userId);
 
-        OnboardUserResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenre());
+        SimpleUserInfoResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenre());
         return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "온보딩 3 - 취향")
     @PostMapping("/third")
-    public ResponseEntity<OnboardUserResponse> thirdStep(
+    public ResponseEntity<SimpleUserInfoResponse> thirdStep(
             @AuthenticationPrincipal User currentUser,
             @Valid @RequestBody OnboardThirdRequest request
     ) {
         String userId = currentUser.getUsername();
         log.debug("온보딩 세번째 userID: {}", userId);
 
-        OnboardUserResponse response = onboardService.updatePreferredType(userId, request.preferredType());
+        SimpleUserInfoResponse response = onboardService.updatePreferredType(userId, request.preferredType());
         return ResponseEntity.ok(response);
     }
 

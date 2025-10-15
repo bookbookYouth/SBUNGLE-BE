@@ -4,10 +4,7 @@ import com.sbungle.sbunglebe.user.domain.UserEntity;
 import com.sbungle.sbunglebe.user.domain.enums.Gender;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
-import com.sbungle.sbunglebe.user.dto.request.OnboardFirstRequest;
-import com.sbungle.sbunglebe.user.dto.request.OnboardSecondRequest;
-import com.sbungle.sbunglebe.user.dto.request.OnboardThirdRequest;
-import com.sbungle.sbunglebe.user.dto.response.OnboardUserResponse;
+import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,25 +20,40 @@ public class OnboardService {
 
 
     @Transactional
-    public OnboardUserResponse updateGenderAge(String userId, Gender gender, int age) {
+    public SimpleUserInfoResponse updateGenderAge(String userId, Gender gender, int age) {
         UserEntity user = userService.findUserByIdOrThrow(userId);
-        user.updateGenderAndAge(gender, age);
-        return OnboardUserResponse.from(user);
+        user.updateGender(gender);
+        user.updateAge(age);
+        return SimpleUserInfoResponse.from(user);
     }
 
     @Transactional
-    public OnboardUserResponse updatePreferredGenre(String userId, PreferredGenre preferredGenre) {
+    public SimpleUserInfoResponse updateGender(String userId, Gender gender) {
+        UserEntity user = userService.findUserByIdOrThrow(userId);
+        user.updateGender(gender);
+        return SimpleUserInfoResponse.from(user);
+    }
+
+    @Transactional
+    public SimpleUserInfoResponse updateAge(String userId, int age) {
+        UserEntity user = userService.findUserByIdOrThrow(userId);
+        user.updateAge(age);
+        return SimpleUserInfoResponse.from(user);
+    }
+
+    @Transactional
+    public SimpleUserInfoResponse updatePreferredGenre(String userId, PreferredGenre preferredGenre) {
         UserEntity user = userService.findUserByIdOrThrow(userId);
         user.updatePreferredGenre(preferredGenre);
-        return OnboardUserResponse.from(user);
+        return SimpleUserInfoResponse.from(user);
     }
 
 
     @Transactional
-    public OnboardUserResponse updatePreferredType(String userId, PreferredType preferredType) {
+    public SimpleUserInfoResponse updatePreferredType(String userId, PreferredType preferredType) {
         UserEntity user = userService.findUserByIdOrThrow(userId);
         user.updatePreferredType(preferredType);
-        return OnboardUserResponse.from(user);
+        return SimpleUserInfoResponse.from(user);
     }
 
 

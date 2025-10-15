@@ -85,8 +85,11 @@ public class UserEntity {
     }
 
 
-    public void updateGenderAndAge(Gender gender, int age) {
+    public void updateGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public void updateAge(Integer age) {
         this.age = age;
     }
 
