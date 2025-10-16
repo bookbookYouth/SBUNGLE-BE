@@ -7,8 +7,6 @@ import com.sbungle.sbunglebe.user.domain.enums.Gender;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
 import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
-import com.sbungle.sbunglebe.user.repository.UserPreferredGenreRepository;
-import com.sbungle.sbunglebe.user.repository.UserPreferredTypeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,9 +21,6 @@ import java.util.List;
 public class OnboardService {
 
     private final UserService userService;
-    private final UserPreferredGenreRepository userPreferredGenreRepository;
-    private final UserPreferredTypeRepository userPreferredTypeRepository;
-
 
     @Transactional
     public SimpleUserInfoResponse updateGenderAge(String userId, Gender gender, int age) {
