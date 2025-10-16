@@ -3,7 +3,6 @@ package com.sbungle.sbunglebe.user.service;
 import com.sbungle.sbunglebe.user.domain.UserEntity;
 import com.sbungle.sbunglebe.user.domain.UserPreferredGenre;
 import com.sbungle.sbunglebe.user.domain.UserPreferredType;
-import com.sbungle.sbunglebe.user.domain.enums.Gender;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
 import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;

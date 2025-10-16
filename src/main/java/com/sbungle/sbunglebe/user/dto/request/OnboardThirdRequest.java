@@ -3,6 +3,7 @@ package com.sbungle.sbunglebe.user.dto.request;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public record OnboardThirdRequest(
                         """
         )
         @NotNull
+        @UniqueElements
         List<PreferredType> preferredTypes
 ) {
 }

@@ -3,6 +3,7 @@ package com.sbungle.sbunglebe.user.dto.request;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public record OnboardSecondRequest(
                         """
         )
         @NotNull
+        @UniqueElements
         List<PreferredGenre> preferredGenres
 ) {
 }
