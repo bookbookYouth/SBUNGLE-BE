@@ -1,5 +1,7 @@
 package com.sbungle.sbunglebe.user.domain;
 
+import com.sbungle.sbunglebe.global.domain.BaseTimeEntity;
+import com.sbungle.sbunglebe.global.domain.BaseTimeEntityWithDeletion;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -13,7 +15,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "user_preferred_genre")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class UserPreferredGenre {
+public class UserPreferredGenre extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
