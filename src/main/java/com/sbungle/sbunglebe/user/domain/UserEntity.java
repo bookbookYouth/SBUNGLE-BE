@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static jakarta.persistence.EnumType.STRING;
@@ -51,11 +53,12 @@ public class UserEntity {
     @Enumerated(STRING)
     private Gender gender;
     private Integer age;
-    @Enumerated(STRING)
-    private PreferredGenre preferredGenre;
-    @Enumerated(STRING)
-    private PreferredType preferredType;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPreferredGenre> preferredGenres = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPreferredType> preferredTypes = new ArrayList<>();
 
     public static UserEntity fromKakaoResponse(KakaoResourceServerResponse serverResponse) {
         return UserEntity.builder()
@@ -85,7 +88,6 @@ public class UserEntity {
 
     }
 
-
     public void updateGender(Gender gender) {
         this.gender = gender;
     }
@@ -94,12 +96,18 @@ public class UserEntity {
         this.age = age;
     }
 
-    public void updatePreferredGenre(PreferredGenre preferredGenre) {
-        this.preferredGenre = preferredGenre;
+    public void addPreferredGenre(UserPreferredGenre userPreferredGenre) {
+        this.preferredGenres.add(userPreferredGenre);
+        if (userPreferredGenre.getUser() != this) {
+            userPreferredGenre.setUser(this);
+        }
     }
 
-
-    public void updatePreferredType(PreferredType preferredType) {
-        this.preferredType = preferredType;
+    public void addPreferredType(UserPreferredType userPreferredType) {
+        this.preferredTypes.add(userPreferredType);
+        if (userPreferredType.getUser() != this) {
+            userPreferredType.setUser(this);
+        }
     }
+
 }

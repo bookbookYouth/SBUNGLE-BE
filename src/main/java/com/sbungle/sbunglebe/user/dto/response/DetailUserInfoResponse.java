@@ -1,11 +1,16 @@
 package com.sbungle.sbunglebe.user.dto.response;
 
 import com.sbungle.sbunglebe.user.domain.UserEntity;
+import com.sbungle.sbunglebe.user.domain.UserPreferredGenre;
+import com.sbungle.sbunglebe.user.domain.UserPreferredType;
 import com.sbungle.sbunglebe.user.domain.enums.Gender;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
 import com.sbungle.sbunglebe.user.domain.enums.SocialLoginType;
 import lombok.Builder;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 public record DetailUserInfoResponse(
@@ -19,11 +24,18 @@ public record DetailUserInfoResponse(
         SocialLoginType socialLoginType,
         Gender gender,
         Integer age,
-        PreferredGenre preferredGenre,
-        PreferredType preferredType
+        List<PreferredGenre> preferredGenres,
+        List<PreferredType> preferredTypes
 
 ) {
     public static DetailUserInfoResponse from(UserEntity user) {
+        List<PreferredGenre> genres = user.getPreferredGenres().stream()
+                .map(UserPreferredGenre::getGenre)
+                .collect(Collectors.toList());
+        List<PreferredType> types = user.getPreferredTypes().stream()
+                .map(UserPreferredType::getPreferredType)
+                .collect(Collectors.toList());
+
         return DetailUserInfoResponse.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())
@@ -34,8 +46,8 @@ public record DetailUserInfoResponse(
                 .socialLoginType(user.getSocialLoginType())
                 .gender(user.getGender())
                 .age(user.getAge())
-                .preferredGenre(user.getPreferredGenre())
-                .preferredType(user.getPreferredType())
+                .preferredGenres(genres)
+                .preferredTypes(types)
                 .build();
     }
 }

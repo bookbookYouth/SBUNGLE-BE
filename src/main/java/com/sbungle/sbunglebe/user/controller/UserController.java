@@ -64,8 +64,8 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "유저 선호 장르 수정")
-    @PatchMapping("/preferred-genre")
+    @Operation(summary = "유저 선호 장르 수정 - 기존 목록 제거")
+    @PutMapping("/preferred-genres")
     public ResponseEntity<SimpleUserInfoResponse> updatePreferredGenre(
             @AuthenticationPrincipal User currentUser,
             @Valid @RequestBody UpdatePreferredGenreRequest request
@@ -73,12 +73,12 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 선호 장르 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenre());
+        SimpleUserInfoResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenres());
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "유저 선호 타입 수정")
-    @PatchMapping("/preferred-type")
+    @Operation(summary = "유저 선호 타입 수정 - 기존 목록 제거")
+    @PutMapping("/preferred-types")
     public ResponseEntity<SimpleUserInfoResponse> updatePreferredType(
             @AuthenticationPrincipal User currentUser,
             @Valid @RequestBody UpdatePreferredTypeRequest request
@@ -86,7 +86,7 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 선호 타입 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredType(userId, request.preferredType());
+        SimpleUserInfoResponse response = onboardService.updatePreferredType(userId, request.preferredTypes());
         return ResponseEntity.ok(response);
     }
 

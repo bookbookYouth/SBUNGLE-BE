@@ -1,14 +1,20 @@
 package com.sbungle.sbunglebe.user.service;
 
 import com.sbungle.sbunglebe.user.domain.UserEntity;
+import com.sbungle.sbunglebe.user.domain.UserPreferredGenre;
+import com.sbungle.sbunglebe.user.domain.UserPreferredType;
 import com.sbungle.sbunglebe.user.domain.enums.Gender;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
 import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
+import com.sbungle.sbunglebe.user.repository.UserPreferredGenreRepository;
+import com.sbungle.sbunglebe.user.repository.UserPreferredTypeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class OnboardService {
 
     private final UserService userService;
+    private final UserPreferredGenreRepository userPreferredGenreRepository;
+    private final UserPreferredTypeRepository userPreferredTypeRepository;
 
 
     @Transactional
@@ -42,17 +50,28 @@ public class OnboardService {
     }
 
     @Transactional
-    public SimpleUserInfoResponse updatePreferredGenre(String userId, PreferredGenre preferredGenre) {
+    public SimpleUserInfoResponse updatePreferredGenre(String userId, List<PreferredGenre> preferredGenres) {
         UserEntity user = userService.findUserByIdOrThrow(userId);
-        user.updatePreferredGenre(preferredGenre);
+
+        user.getPreferredGenres().clear();
+        preferredGenres.forEach(genre -> {
+            UserPreferredGenre userPreferredGenre = UserPreferredGenre.of(user, genre);
+            user.addPreferredGenre(userPreferredGenre);
+        });
         return SimpleUserInfoResponse.from(user);
     }
 
 
     @Transactional
-    public SimpleUserInfoResponse updatePreferredType(String userId, PreferredType preferredType) {
+    public SimpleUserInfoResponse updatePreferredType(String userId, List<PreferredType> preferredTypes) {
         UserEntity user = userService.findUserByIdOrThrow(userId);
-        user.updatePreferredType(preferredType);
+
+        user.getPreferredTypes().clear();
+        preferredTypes.forEach(type -> {
+            UserPreferredType userPreferredType = UserPreferredType.of(user, type);
+            user.addPreferredType(userPreferredType);
+        });
+
         return SimpleUserInfoResponse.from(user);
     }
 

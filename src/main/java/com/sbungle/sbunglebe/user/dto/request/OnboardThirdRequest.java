@@ -4,6 +4,8 @@ import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 public record OnboardThirdRequest(
         @Schema(
                 description = """
@@ -19,6 +21,6 @@ public record OnboardThirdRequest(
                         """
         )
         @NotNull
-        PreferredType preferredType
+        List<PreferredType> preferredTypes
 ) {
 }

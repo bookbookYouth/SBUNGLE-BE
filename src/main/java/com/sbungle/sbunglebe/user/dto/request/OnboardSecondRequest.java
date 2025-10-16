@@ -4,6 +4,8 @@ import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 public record OnboardSecondRequest(
         @Schema(
                 description = """
@@ -17,6 +19,6 @@ public record OnboardSecondRequest(
                         """
         )
         @NotNull
-        PreferredGenre preferredGenre
+        List<PreferredGenre> preferredGenres
 ) {
 }

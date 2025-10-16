@@ -47,7 +47,7 @@ public class OnboardController {
         String userId = currentUser.getUsername();
         log.debug("온보딩 두번째 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenre());
+        SimpleUserInfoResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenres());
         return ResponseEntity.ok(response);
     }
 
@@ -60,7 +60,7 @@ public class OnboardController {
         String userId = currentUser.getUsername();
         log.debug("온보딩 세번째 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredType(userId, request.preferredType());
+        SimpleUserInfoResponse response = onboardService.updatePreferredType(userId, request.preferredTypes());
         return ResponseEntity.ok(response);
     }
 
