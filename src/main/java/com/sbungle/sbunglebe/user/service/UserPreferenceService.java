@@ -28,10 +28,9 @@ public class UserPreferenceService {
         UserEntity user = userService.findUserByIdOrThrow(userId);
 
         user.getPreferredGenres().clear();
-        preferredGenres.forEach(genre -> {
-            UserPreferredGenre userPreferredGenre = UserPreferredGenre.of(user, genre);
-            user.addPreferredGenre(userPreferredGenre);
-        });
+        preferredGenres.stream()
+                    .map(preferredGenre -> UserPreferredGenre.of(user, preferredGenre))
+                    .forEach(user::addPreferredGenre);
 
         return SimpleUserInfoResponse.from(user);
     }
@@ -42,10 +41,9 @@ public class UserPreferenceService {
         UserEntity user = userService.findUserByIdOrThrow(userId);
 
         user.getPreferredTypes().clear();
-        preferredTypes.forEach(type -> {
-            UserPreferredType userPreferredType = UserPreferredType.of(user, type);
-            user.addPreferredType(userPreferredType);
-        });
+        preferredTypes.stream()
+                .map(preferredType -> UserPreferredType.of(user, preferredType))
+                .forEach(user::addPreferredType);
 
         return SimpleUserInfoResponse.from(user);
     }
