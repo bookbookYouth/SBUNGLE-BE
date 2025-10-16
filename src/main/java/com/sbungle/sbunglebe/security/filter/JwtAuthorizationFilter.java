@@ -12,12 +12,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Optional;
 
 import static com.sbungle.sbunglebe.user.constants.SecurityConstants.ACCESS_TOKEN_COOKIE;
@@ -94,11 +97,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (jwtProvider.validateToken(refreshToken)) {
             // 재발급
             String newAccessToken = jwtProvider.reissueWithRefresh(refreshToken);
-            Cookie cookie = new Cookie(ACCESS_TOKEN_COOKIE, newAccessToken);
-            cookie.setHttpOnly(true);
-            cookie.setPath("/");
-            // cookie.setSecure(true); // enable in production behind HTTPS
-            response.addCookie(cookie);
+
+            ResponseCookie newAccessCookie = ResponseCookie.from(ACCESS_TOKEN_COOKIE, newAccessToken)
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .sameSite("Lax")
+                    .maxAge(Duration.ofHours(1))
+                    .build();
+
+            response.addHeader(HttpHeaders.SET_COOKIE, newAccessCookie.toString());
+
         }
     }
 

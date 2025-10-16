@@ -37,7 +37,7 @@ public class UserEntity {
     @Column(length = 1024)
     private String imageUrl;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = true)
     private String nickName;
 
     private boolean enabled;
