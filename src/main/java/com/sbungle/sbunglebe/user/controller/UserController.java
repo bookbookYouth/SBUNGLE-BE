@@ -33,7 +33,7 @@ public class UserController {
     ) {
         String userId = currentUser.getUsername();
 
-        DetailUserInfoResponse response = userService.getUserInfo(userId);
+        DetailUserInfoResponse response = userService.getUserDetailInfo(userId);
         return ResponseEntity.ok(response);
     }
 
@@ -47,7 +47,7 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 성별 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = userPreferenceService.updateGender(userId, request.gender());
+        SimpleUserInfoResponse response = userService.updateGender(userId, request.gender());
         return ResponseEntity.ok(response);
     }
 
@@ -60,7 +60,7 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 나이 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = userPreferenceService.updateAge(userId, request.age());
+        SimpleUserInfoResponse response = userService.updateAge(userId, request.age());
         return ResponseEntity.ok(response);
     }
 

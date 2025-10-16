@@ -5,6 +5,7 @@ import com.sbungle.sbunglebe.user.dto.request.OnboardSecondRequest;
 import com.sbungle.sbunglebe.user.dto.request.OnboardThirdRequest;
 import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
 import com.sbungle.sbunglebe.user.service.UserPreferenceService;
+import com.sbungle.sbunglebe.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OnboardController {
 
     private final UserPreferenceService userPreferenceService;
+    private final UserService userService;
 
     @Operation(summary = "온보딩 1 - 성별, 나이")
     @PostMapping("/first")
@@ -34,7 +36,7 @@ public class OnboardController {
         String userId = currentUser.getUsername();
         log.debug("온보딩 첫번째 userID: {}", userId);
 
-        SimpleUserInfoResponse response = userPreferenceService.updateGenderAge(userId, request.gender(), request.age());
+        SimpleUserInfoResponse response = userService.updateGenderAge(userId, request.gender(), request.age());
         return ResponseEntity.ok(response);
     }
 

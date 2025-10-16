@@ -22,27 +22,6 @@ public class UserPreferenceService {
 
     private final UserService userService;
 
-    @Transactional
-    public SimpleUserInfoResponse updateGenderAge(String userId, Gender gender, int age) {
-        UserEntity user = userService.findUserByIdOrThrow(userId);
-        user.updateGender(gender);
-        user.updateAge(age);
-        return SimpleUserInfoResponse.from(user);
-    }
-
-    @Transactional
-    public SimpleUserInfoResponse updateGender(String userId, Gender gender) {
-        UserEntity user = userService.findUserByIdOrThrow(userId);
-        user.updateGender(gender);
-        return SimpleUserInfoResponse.from(user);
-    }
-
-    @Transactional
-    public SimpleUserInfoResponse updateAge(String userId, int age) {
-        UserEntity user = userService.findUserByIdOrThrow(userId);
-        user.updateAge(age);
-        return SimpleUserInfoResponse.from(user);
-    }
 
     @Transactional
     public SimpleUserInfoResponse updatePreferredGenre(String userId, List<PreferredGenre> preferredGenres) {

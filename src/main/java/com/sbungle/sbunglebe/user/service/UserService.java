@@ -1,7 +1,9 @@
 package com.sbungle.sbunglebe.user.service;
 
 import com.sbungle.sbunglebe.user.domain.UserEntity;
+import com.sbungle.sbunglebe.user.domain.enums.Gender;
 import com.sbungle.sbunglebe.user.dto.response.DetailUserInfoResponse;
+import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
 import com.sbungle.sbunglebe.user.exception.AuthenticationErrorCode;
 import com.sbungle.sbunglebe.user.exception.AuthenticationException;
 import com.sbungle.sbunglebe.user.repository.UserRepository;
@@ -28,9 +30,31 @@ public class UserService {
                              .orElseThrow(() -> new AuthenticationException(AuthenticationErrorCode.USER_NOT_FOUND));
     }
 
-    public DetailUserInfoResponse getUserInfo(String userId) {
+    public DetailUserInfoResponse getUserDetailInfo(String userId) {
         UserEntity user = findUserByIdOrThrow(userId);
         return DetailUserInfoResponse.from(user);
+    }
+
+    @Transactional
+    public SimpleUserInfoResponse updateGenderAge(String userId, Gender gender, int age) {
+        UserEntity user = findUserByIdOrThrow(userId);
+        user.updateGender(gender);
+        user.updateAge(age);
+        return SimpleUserInfoResponse.from(user);
+    }
+
+    @Transactional
+    public SimpleUserInfoResponse updateGender(String userId, Gender gender) {
+        UserEntity user = findUserByIdOrThrow(userId);
+        user.updateGender(gender);
+        return SimpleUserInfoResponse.from(user);
+    }
+
+    @Transactional
+    public SimpleUserInfoResponse updateAge(String userId, int age) {
+        UserEntity user = findUserByIdOrThrow(userId);
+        user.updateAge(age);
+        return SimpleUserInfoResponse.from(user);
     }
 
 }
