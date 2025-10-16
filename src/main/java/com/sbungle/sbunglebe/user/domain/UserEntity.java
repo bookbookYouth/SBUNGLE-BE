@@ -1,9 +1,10 @@
 package com.sbungle.sbunglebe.user.domain;
 
 import com.sbungle.sbunglebe.user.domain.enums.*;
+import com.sbungle.sbunglebe.user.domain.enums.Role;
+import com.sbungle.sbunglebe.user.domain.enums.SocialLoginType;
 import com.sbungle.sbunglebe.user.dto.response.KakaoResourceServerResponse;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
