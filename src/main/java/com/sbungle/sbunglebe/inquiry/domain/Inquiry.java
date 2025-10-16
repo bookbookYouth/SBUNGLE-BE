@@ -1,7 +1,6 @@
-package com.sbungle.sbunglebe.contact.domain;
+package com.sbungle.sbunglebe.inquiry.domain;
 
 import com.sbungle.sbunglebe.global.domain.BaseTimeEntity;
-import com.sbungle.sbunglebe.user.domain.UserEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,10 +10,10 @@ import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "user_contact")
+@Table(name = "inquiry")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class UserContact extends BaseTimeEntity {
+public class Inquiry extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +26,15 @@ public class UserContact extends BaseTimeEntity {
     private String content;
 
 
-    public static UserContact of(String userId, String content) {
-        return UserContact.builder()
+    public static Inquiry of(String userId, String content) {
+        return Inquiry.builder()
                 .userId(userId)
                 .content(content)
                 .build();
     }
 
     @Builder(access = PRIVATE)
-    private UserContact(String userId, String content) {
+    private Inquiry(String userId, String content) {
         this.userId = userId;
         this.content = content;
     }

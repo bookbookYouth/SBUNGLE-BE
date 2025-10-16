@@ -1,16 +1,16 @@
-package com.sbungle.sbunglebe.contact.dto.response;
+package com.sbungle.sbunglebe.inquiry.dto.response;
 
-import com.sbungle.sbunglebe.contact.domain.UserContact;
+import com.sbungle.sbunglebe.inquiry.domain.Inquiry;
 
 import java.time.LocalDateTime;
 
-public record ContactResponse(
+public record InquiryResponse(
         Long id,
         String content,
         LocalDateTime createdAt
 ) {
-    public static ContactResponse from(UserContact contact) {
-        return new ContactResponse(
+    public static InquiryResponse from(Inquiry contact) {
+        return new InquiryResponse(
                 contact.getId(),
                 contact.getContent(),
                 contact.getCreatedAt()

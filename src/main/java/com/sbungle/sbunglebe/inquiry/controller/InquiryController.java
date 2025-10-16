@@ -1,8 +1,8 @@
-package com.sbungle.sbunglebe.contact.controller;
+package com.sbungle.sbunglebe.inquiry.controller;
 
-import com.sbungle.sbunglebe.contact.dto.request.CreateContactRequest;
-import com.sbungle.sbunglebe.contact.dto.response.ContactResponse;
-import com.sbungle.sbunglebe.contact.service.ContactService;
+import com.sbungle.sbunglebe.inquiry.dto.request.CreateInquiryRequest;
+import com.sbungle.sbunglebe.inquiry.dto.response.InquiryResponse;
+import com.sbungle.sbunglebe.inquiry.service.InquiryService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,30 +14,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/contact/v1")
+@RequestMapping("/inquiry/v1")
 @RequiredArgsConstructor
-public class ContactController {
+public class InquiryController {
 
-    private final ContactService contactService;
+    private final InquiryService inquiryService;
 
     @Operation(summary = "문의하기 생성")
     @PostMapping
-    public ResponseEntity<ContactResponse> createContact(
+    public ResponseEntity<InquiryResponse> createInquiry(
             @AuthenticationPrincipal User currentUser,
-            @Valid @RequestBody CreateContactRequest request
+            @Valid @RequestBody CreateInquiryRequest request
     ) {
         String userId = currentUser.getUsername();
-        ContactResponse response = contactService.createContact(userId, request.content());
+        InquiryResponse response = inquiryService.createInquiry(userId, request.content());
         return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "내 문의 목록 조회")
     @GetMapping
-    public ResponseEntity<List<ContactResponse>> getContactList(
+    public ResponseEntity<List<InquiryResponse>> getInquiryList(
             @AuthenticationPrincipal User currentUser
     ) {
         String userId = currentUser.getUsername();
-        List<ContactResponse> responses = contactService.getContactsByUserId(userId);
+        List<InquiryResponse> responses = inquiryService.getInquiriesByUserId(userId);
         return ResponseEntity.ok(responses);
     }
 }
