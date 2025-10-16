@@ -1,5 +1,6 @@
 package com.sbungle.sbunglebe.user.domain;
 
+import com.sbungle.sbunglebe.user.domain.enums.*;
 import com.sbungle.sbunglebe.user.domain.enums.Role;
 import com.sbungle.sbunglebe.user.domain.enums.SocialLoginType;
 import com.sbungle.sbunglebe.user.dto.response.KakaoResourceServerResponse;
@@ -8,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static jakarta.persistence.EnumType.STRING;
@@ -36,7 +39,7 @@ public class UserEntity {
     @Column(length = 1024)
     private String imageUrl;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = true)
     private String nickName;
 
     private boolean enabled;
@@ -47,7 +50,15 @@ public class UserEntity {
     @Enumerated(STRING)
     SocialLoginType socialLoginType = SocialLoginType.NONE;
 
+    @Enumerated(STRING)
+    private Gender gender;
+    private Integer age;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPreferredGenre> preferredGenres = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPreferredType> preferredTypes = new ArrayList<>();
 
     public static UserEntity fromKakaoResponse(KakaoResourceServerResponse serverResponse) {
         return UserEntity.builder()
@@ -58,7 +69,7 @@ public class UserEntity {
 
                 .socialLoginType(SocialLoginType.KAKAO)
                 .role(Role.USER)
-                .enabled(false)
+                .enabled(true)
                 .build();
     }
 
@@ -77,5 +88,26 @@ public class UserEntity {
 
     }
 
+    public void updateGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void updateAge(Integer age) {
+        this.age = age;
+    }
+
+    public void addPreferredGenre(UserPreferredGenre userPreferredGenre) {
+        this.preferredGenres.add(userPreferredGenre);
+        if (userPreferredGenre.getUser() != this) {
+            userPreferredGenre.setUser(this);
+        }
+    }
+
+    public void addPreferredType(UserPreferredType userPreferredType) {
+        this.preferredTypes.add(userPreferredType);
+        if (userPreferredType.getUser() != this) {
+            userPreferredType.setUser(this);
+        }
+    }
 
 }

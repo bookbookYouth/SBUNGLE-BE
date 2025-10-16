@@ -19,7 +19,6 @@ public interface AuthConverter {
 
     AuthConverter INSTANCE = Mappers.getMapper(AuthConverter.class);
 
-    @Mapping(source = "id", target = "userId")
     SocialLoginResponse toSocialLoginResponse(UserEntity userEntity);
 
     default String map(Long value) {
