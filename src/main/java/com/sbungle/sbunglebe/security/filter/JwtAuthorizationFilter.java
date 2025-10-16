@@ -56,12 +56,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private String extractAccessTokenFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) return null;
-        for (Cookie cookie : cookies) {
-            if (ACCESS_TOKEN_COOKIE.equals(cookie.getName())) {
-                return cookie.getValue();
-            }
-        }
-        return null;
+        return java.util.Arrays.stream(cookies)
+                .filter(cookie -> ACCESS_TOKEN_COOKIE.equals(cookie.getName()))
+                .map(Cookie::getValue)
+                .findFirst()
+                .orElse(null);
     }
 
 
