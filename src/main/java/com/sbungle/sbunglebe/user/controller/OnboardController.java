@@ -4,7 +4,7 @@ import com.sbungle.sbunglebe.user.dto.request.OnboardFirstRequest;
 import com.sbungle.sbunglebe.user.dto.request.OnboardSecondRequest;
 import com.sbungle.sbunglebe.user.dto.request.OnboardThirdRequest;
 import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
-import com.sbungle.sbunglebe.user.service.OnboardService;
+import com.sbungle.sbunglebe.user.service.UserPreferenceService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class OnboardController {
 
-    private final OnboardService onboardService;
+    private final UserPreferenceService userPreferenceService;
 
     @Operation(summary = "온보딩 1 - 성별, 나이")
     @PostMapping("/first")
@@ -34,7 +34,7 @@ public class OnboardController {
         String userId = currentUser.getUsername();
         log.debug("온보딩 첫번째 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updateGenderAge(userId, request.gender(), request.age());
+        SimpleUserInfoResponse response = userPreferenceService.updateGenderAge(userId, request.gender(), request.age());
         return ResponseEntity.ok(response);
     }
 
@@ -47,7 +47,7 @@ public class OnboardController {
         String userId = currentUser.getUsername();
         log.debug("온보딩 두번째 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenres());
+        SimpleUserInfoResponse response = userPreferenceService.updatePreferredGenre(userId, request.preferredGenres());
         return ResponseEntity.ok(response);
     }
 
@@ -60,7 +60,7 @@ public class OnboardController {
         String userId = currentUser.getUsername();
         log.debug("온보딩 세번째 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredType(userId, request.preferredTypes());
+        SimpleUserInfoResponse response = userPreferenceService.updatePreferredType(userId, request.preferredTypes());
         return ResponseEntity.ok(response);
     }
 

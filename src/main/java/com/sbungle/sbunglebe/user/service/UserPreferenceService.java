@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
-public class OnboardService {
+public class UserPreferenceService {
 
     private final UserService userService;
 
@@ -53,6 +53,7 @@ public class OnboardService {
             UserPreferredGenre userPreferredGenre = UserPreferredGenre.of(user, genre);
             user.addPreferredGenre(userPreferredGenre);
         });
+
         return SimpleUserInfoResponse.from(user);
     }
 

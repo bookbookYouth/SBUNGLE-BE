@@ -6,7 +6,7 @@ import com.sbungle.sbunglebe.user.dto.request.UpdatePreferredGenreRequest;
 import com.sbungle.sbunglebe.user.dto.request.UpdatePreferredTypeRequest;
 import com.sbungle.sbunglebe.user.dto.response.DetailUserInfoResponse;
 import com.sbungle.sbunglebe.user.dto.response.SimpleUserInfoResponse;
-import com.sbungle.sbunglebe.user.service.OnboardService;
+import com.sbungle.sbunglebe.user.service.UserPreferenceService;
 import com.sbungle.sbunglebe.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final OnboardService onboardService;
+    private final UserPreferenceService userPreferenceService;
 
     @Operation(summary = "유저 정보 조회")
     @GetMapping("/me")
@@ -47,7 +47,7 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 성별 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updateGender(userId, request.gender());
+        SimpleUserInfoResponse response = userPreferenceService.updateGender(userId, request.gender());
         return ResponseEntity.ok(response);
     }
 
@@ -60,7 +60,7 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 나이 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updateAge(userId, request.age());
+        SimpleUserInfoResponse response = userPreferenceService.updateAge(userId, request.age());
         return ResponseEntity.ok(response);
     }
 
@@ -73,7 +73,7 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 선호 장르 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredGenre(userId, request.preferredGenres());
+        SimpleUserInfoResponse response = userPreferenceService.updatePreferredGenre(userId, request.preferredGenres());
         return ResponseEntity.ok(response);
     }
 
@@ -86,7 +86,7 @@ public class UserController {
         String userId = currentUser.getUsername();
         log.debug("유저 선호 타입 수정 userID: {}", userId);
 
-        SimpleUserInfoResponse response = onboardService.updatePreferredType(userId, request.preferredTypes());
+        SimpleUserInfoResponse response = userPreferenceService.updatePreferredType(userId, request.preferredTypes());
         return ResponseEntity.ok(response);
     }
 
