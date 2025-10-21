@@ -1,5 +1,7 @@
 package com.sbungle.sbunglebe.security.config;
 
+import com.sbungle.sbunglebe.security.filter.JwtAuthorizationFilter;
+import com.sbungle.sbunglebe.security.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,13 +20,11 @@ public class SecurityConfig {
 
     private final CorsConfig corsConfig;
 
-//    private final JwtAuthorizationFilter jwtAuthorizationFilter;
-//    private final JwtExceptionFilter jwtExceptionFilter;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final JwtExceptionFilter jwtExceptionFilter;
 
     private static final String[] WHITE_LIST = {
-            "/auth/login",
-            "/auth/register",
-            "/auth/register-admin",
+            "/auth/v1/login/kakao",
             "/actuator/health",
             "/v3/api-docs/**",
             "/swagger-ui/**",
@@ -46,12 +46,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST).permitAll()
                         .anyRequest().authenticated()
-                );
+                )
 
                 // 인가 필터 설정
-//                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 // 필터 예외 설정
-//                .addFilterBefore(jwtExceptionFilter, jwtAuthorizationFilter.getClass());
+                .addFilterBefore(jwtExceptionFilter, jwtAuthorizationFilter.getClass());
 
         return http.build();
 

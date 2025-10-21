@@ -52,7 +52,26 @@ public class Book extends BaseTimeEntity {
     @Column(name = "review_count")
     private int reviewCount;
 
+    @Column(name = "review_score")
+    private float reviewTotalScore;
+
     @Column(name = "present_count")
     private int presentCount;
+
+    public void increaseLikeCount() { this.likeCount++; }
+
+    public void decreaseLikeCount() {
+        if(this.likeCount > 0) { this.likeCount--; }
+    }
+
+    public void increaseReviewCount() { this.reviewCount++; }
+
+    public void decreaseReviewCount() {
+        if(this.reviewCount > 0) { this.reviewCount--; }
+    }
+
+    public void updateReviewTotalScore(float newScore) { this.reviewTotalScore += newScore; }
+
+
 
 }

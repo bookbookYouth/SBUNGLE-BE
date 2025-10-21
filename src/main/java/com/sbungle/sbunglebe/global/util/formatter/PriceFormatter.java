@@ -11,7 +11,7 @@ public record PriceFormatter(int price) {
 
     @JsonValue
     public String asString() {
-        return FORMATTER.format(price) + "원";
+        return FORMATTER.format(price);
     }
 
 }

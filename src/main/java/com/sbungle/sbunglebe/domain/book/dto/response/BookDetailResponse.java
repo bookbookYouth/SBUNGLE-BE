@@ -10,7 +10,8 @@ public record BookDetailResponse (
     String title,
     String category,
     PriceFormatter price,
-    String sentence
+    String sentence,
+    String averageScore
 ) {
     public static BookDetailResponse from(Book book) {
         return new BookDetailResponse(
@@ -18,7 +19,9 @@ public record BookDetailResponse (
                 book.getTitle(),
                 book.getCategory().getValue(),
                 new PriceFormatter(book.getPrice()),
-                book.getSentence()
+                book.getSentence(),
+                String.format("%.2f", (book.getReviewTotalScore()/(double) book.getReviewCount()))
+
         );
     }
 
