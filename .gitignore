@@ -39,4 +39,3 @@ out/
 
 application-jwt.yml
 application-oauth.yml
-appication-prod.yml
