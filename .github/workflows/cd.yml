@@ -35,7 +35,7 @@ jobs:
           docker push seoas01/sbungle-be
 
       - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
