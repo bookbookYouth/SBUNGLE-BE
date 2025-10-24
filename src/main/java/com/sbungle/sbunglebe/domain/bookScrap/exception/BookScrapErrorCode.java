@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum BookScrapErrorCode implements ErrorCode {
     NOT_FOUND_BOOKSCRAP(HttpStatus.NOT_FOUND, "해당 도서를 찜하지 않았습니다."),
+    ALREADY_EXIST_BOOKSCRAP(HttpStatus.BAD_REQUEST, "이미 해당 도서를 찜했습니다.")
     ;
 
 

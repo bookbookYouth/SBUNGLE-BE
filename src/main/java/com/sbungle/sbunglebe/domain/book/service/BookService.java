@@ -4,6 +4,8 @@ import com.sbungle.sbunglebe.domain.book.dto.response.BookDetailResponse;
 import com.sbungle.sbunglebe.domain.book.dto.vo.BookScrapVo;
 import com.sbungle.sbunglebe.domain.book.entity.Book;
 import com.sbungle.sbunglebe.domain.book.reader.BookReader;
+import com.sbungle.sbunglebe.domain.bookScrap.validator.BookScrapValidator;
+import com.sbungle.sbunglebe.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BookService {
     private final BookReader bookReader;
+    private final BookScrapValidator bookScrapValidator;
+    private final UserService userService;
 
     public BookDetailResponse getBookDetail(String userId, String bookId) {
+        userService.findUserByIdOrThrow(userId); // user검증
         Book book = bookReader.getBookByBookId(bookId);
-        boolean isScrap = false;
-//        boolean isScrap = bookScrapService.findByUserIdAndBookId(userId, bookId);
+        boolean isScrap = bookScrapValidator.existsByUserIdAndBookId(userId, bookId);
         return BookDetailResponse.from(book, isScrap);
 
     }

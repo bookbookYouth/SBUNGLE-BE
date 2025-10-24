@@ -12,7 +12,7 @@ public class BookValidator {
     private final BookRepository bookRepository;
 
     public void validateBookId(String bookId) {
-        if (bookRepository.existsByBookId(bookId)) {
+        if (!bookRepository.existsByBookId(bookId)) {
             throw new BookException(BookErrorCode.NOT_FOUND_BOOK, bookId);
         }
     }

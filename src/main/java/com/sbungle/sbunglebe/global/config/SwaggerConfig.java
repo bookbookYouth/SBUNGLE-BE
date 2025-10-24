@@ -17,6 +17,8 @@ import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static com.sbungle.sbunglebe.user.constants.SecurityConstants.ACCESS_TOKEN_COOKIE;
+
 @Configuration
 public class SwaggerConfig {
 
@@ -26,7 +28,7 @@ public class SwaggerConfig {
 
         Components components = new Components()
                 .addSecuritySchemes(cookieSchemeName, new SecurityScheme()
-                        .name("accessToken")  // 쿠키 이름
+                        .name(ACCESS_TOKEN_COOKIE)  // 쿠키 이름
                         .type(SecurityScheme.Type.APIKEY)
                         .in(SecurityScheme.In.COOKIE)
                 );

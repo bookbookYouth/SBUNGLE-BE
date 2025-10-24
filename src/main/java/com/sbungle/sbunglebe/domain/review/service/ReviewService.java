@@ -8,6 +8,7 @@ import com.sbungle.sbunglebe.domain.review.entity.Review;
 import com.sbungle.sbunglebe.domain.review.entity.enums.LikeType;
 import com.sbungle.sbunglebe.domain.review.reader.ReviewReader;
 import com.sbungle.sbunglebe.domain.review.repository.ReviewRepository;
+import com.sbungle.sbunglebe.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,21 +25,20 @@ public class ReviewService {
     private final BookValidator bookValidator;
     private final BookService bookService;
     private final ReviewReader reviewReader;
+    private final UserService userService;
 
     public List<ReviewResponse> getReviewList(String bookId, String orderBy) {
-        // TODO: username 추가할 예정
-        String username = "";
         List<ReviewResponse> reviewList = new ArrayList<>();
 
         if (orderBy.equals("score")) {
             reviewList = reviewRepository.findByBookIdOrderByLikeCountDesc(bookId).stream().map(
-                    review -> ReviewResponse.of(review, username)
+                    review -> ReviewResponse.of(review, userService.getNickNameByUserId(review.getUserId()))
             ).toList();
         }
 
         else{
             reviewList = reviewRepository.findByBookIdOrderByCreatedAtDesc(bookId).stream().map(
-                    review -> ReviewResponse.of(review, username)
+                    review -> ReviewResponse.of(review, userService.getNickNameByUserId(review.getUserId()))
             ).toList();
         }
 
@@ -48,7 +48,7 @@ public class ReviewService {
 
     @Transactional
     public void addReview(String bookId, String userId, ReviewCreateRequest reviewCreateRequest) {
-        // TODO: 유저 검증
+        userService.findUserByIdOrThrow(userId);
         bookValidator.validateBookId(bookId);
         Review review = Review.createReview(bookId, userId, reviewCreateRequest);
         bookService.increaseBookreviewCount(bookId);
