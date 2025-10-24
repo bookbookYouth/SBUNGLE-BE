@@ -1,9 +1,7 @@
 package com.sbungle.sbunglebe.domain.book.dto.response;
 
 import com.sbungle.sbunglebe.domain.book.entity.Book;
-import com.sbungle.sbunglebe.domain.book.entity.Category;
 import com.sbungle.sbunglebe.global.util.formatter.PriceFormatter;
-import lombok.Getter;
 
 public record BookDetailResponse (
     String bookId,
@@ -11,16 +9,18 @@ public record BookDetailResponse (
     String category,
     PriceFormatter price,
     String sentence,
-    String averageScore
+    String averageScore,
+    boolean isScrap
 ) {
-    public static BookDetailResponse from(Book book) {
+    public static BookDetailResponse from (Book book, boolean isScrap) {
         return new BookDetailResponse(
                 book.getBookId(),
                 book.getTitle(),
-                book.getCategory().getValue(),
+                book.getGenre().getDescription(),
                 new PriceFormatter(book.getPrice()),
                 book.getSentence(),
-                String.format("%.2f", (book.getReviewTotalScore()/(double) book.getReviewCount()))
+                String.format("%.2f", (book.getReviewTotalScore()/(double) book.getReviewCount())),
+                isScrap
 
         );
     }

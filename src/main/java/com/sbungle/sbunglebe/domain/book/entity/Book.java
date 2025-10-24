@@ -1,6 +1,8 @@
 package com.sbungle.sbunglebe.domain.book.entity;
 
 import com.sbungle.sbunglebe.global.domain.BaseTimeEntity;
+import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
+import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,9 +25,9 @@ public class Book extends BaseTimeEntity {
     @Column(name = "book_title")
     private String title;  // 추천대상 ex. 내리는 금값 지금이 매수 시점일까?
 
-    @Column(name = "category")
+    @Column(name = "genre")
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private PreferredGenre genre;
 
     @Column(name = "price")
     private int price;
@@ -38,7 +40,7 @@ public class Book extends BaseTimeEntity {
 
     @Column(name = "mood")
     @Enumerated(EnumType.STRING)
-    private Mood mood;  // 분위기
+    private PreferredType mood;  // 분위기
 
     @Column(name = "publisher")
     private String publisher;

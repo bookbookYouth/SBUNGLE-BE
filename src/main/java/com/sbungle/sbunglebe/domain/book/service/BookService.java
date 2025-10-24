@@ -12,12 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BookService {
-
     private final BookReader bookReader;
 
-    public BookDetailResponse getBookDetail(String bookId) {
+    public BookDetailResponse getBookDetail(String userId, String bookId) {
         Book book = bookReader.getBookByBookId(bookId);
-        return BookDetailResponse.from(book);
+        boolean isScrap = false;
+//        boolean isScrap = bookScrapService.findByUserIdAndBookId(userId, bookId);
+        return BookDetailResponse.from(book, isScrap);
 
     }
 
