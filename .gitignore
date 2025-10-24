@@ -41,4 +41,4 @@ application-jwt.yml
 application-oauth.yml
 
 .env
-application.prod.yml
+application-prod.yml
