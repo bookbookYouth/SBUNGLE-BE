@@ -45,7 +45,7 @@ jobs:
             sudo touch .env
             echo "${{ secrets.ENV_VARS }}" | sudo tee .env > /dev/null
             sudo touch docker-compose.yaml
-            echo -e "${{ secrets.DOCKER_COMPOSE }}" | sudo tee docker-compose.yaml > /dev/null
+            printf "%s" "${{ secrets.DOCKER_COMPOSE }}" | sudo tee docker-compose.yaml > /dev/null
             sudo chmod 666 /var/run/docker.sock
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull seoas01/sbungle-be
