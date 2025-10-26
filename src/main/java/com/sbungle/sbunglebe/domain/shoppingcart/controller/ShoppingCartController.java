@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,5 +27,14 @@ public class ShoppingCartController {
         shoppingCartService.addOrIncreaseItem(userId, bookId);
     }
 
-    // TODO: 장바구리 품목 삭제
+    @Operation(summary = "장바구니 수량 감소")
+    @DeleteMapping("/{shoppingCartId}")
+    public void shoppingCartRemove(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable String shoppingCartId
+    ) {
+        String userId = currentUser.getUsername();
+        log.debug("장바구니 품목 삭제 userID: {}, bookID; {}", userId, shoppingCartId);
+        shoppingCartService.removeItem(userId, shoppingCartId);
+    }
 }

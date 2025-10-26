@@ -2,6 +2,8 @@ package com.sbungle.sbunglebe.domain.shoppingcart.service;
 
 import com.sbungle.sbunglebe.domain.book.validator.BookValidator;
 import com.sbungle.sbunglebe.domain.shoppingcart.entity.ShoppingCart;
+import com.sbungle.sbunglebe.domain.shoppingcart.exception.ShoppingCartErrorCode;
+import com.sbungle.sbunglebe.domain.shoppingcart.exception.ShoppingCartException;
 import com.sbungle.sbunglebe.domain.shoppingcart.repository.ShoppingCartRepository;
 import com.sbungle.sbunglebe.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,8 @@ public class ShoppingCartService {
 
     @Transactional
     public void addOrIncreaseItem(String userId, String bookId) {
+        userService.findUserByIdOrThrow(userId);
+        bookValidator.validateBookId(bookId);
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserIdAndBookId(userId, bookId)
                 .orElseGet(() ->  addItem(userId, bookId));
         shoppingCart.increaseQuantity();
@@ -27,12 +31,25 @@ public class ShoppingCartService {
 
     @Transactional
     public ShoppingCart addItem(String userId, String bookId) {
-        userService.findUserByIdOrThrow(userId);
-        bookValidator.validateBookId(bookId);
+
 
         ShoppingCart shoppingCart = ShoppingCart.createShoppingCart(userId, bookId);
         return shoppingCartRepository.save(shoppingCart);
 
+    }
+
+    @Transactional
+    public void removeItem(String userId, String shoppingCartId) {
+        userService.findUserByIdOrThrow(userId);
+
+        ShoppingCart shoppingCart = shoppingCartRepository.findByShoppingCartId(shoppingCartId)
+                .orElseThrow(() -> new ShoppingCartException(ShoppingCartErrorCode.NOT_FOUND_ITEM));
+
+        if (shoppingCart.getQuantity() > 1) {
+            shoppingCart.decreaseQuantity();
+        } else {
+            shoppingCartRepository.delete(shoppingCart);
+        }
     }
 
 
