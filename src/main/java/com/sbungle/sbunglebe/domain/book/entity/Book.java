@@ -60,6 +60,8 @@ public class Book extends BaseTimeEntity {
     @Column(name = "present_count")
     private int presentCount;
 
+
+
     public void increaseLikeCount() { this.likeCount++; }
 
     public void decreaseLikeCount() {

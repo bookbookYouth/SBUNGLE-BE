@@ -1,4 +1,4 @@
-package com.sbungle.sbunglebe.domain.book.reader;
+package com.sbungle.sbunglebe.domain.book.util;
 
 import com.sbungle.sbunglebe.domain.book.entity.Book;
 import com.sbungle.sbunglebe.domain.book.exception.BookErrorCode;

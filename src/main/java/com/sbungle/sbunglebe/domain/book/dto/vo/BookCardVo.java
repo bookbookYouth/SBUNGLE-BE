@@ -7,14 +7,14 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class BookScrapVo {
+public class BookCardVo {
     private String bookId;
     private String title;
     private String category;
     private PriceFormatter price;
 
-    public static BookScrapVo from(Book book) {
-        return BookScrapVo.builder()
+    public static BookCardVo from(Book book) {
+        return BookCardVo.builder()
                 .bookId(book.getBookId())
                 .title(book.getTitle())
                 .category(book.getGenre().getDescription())
