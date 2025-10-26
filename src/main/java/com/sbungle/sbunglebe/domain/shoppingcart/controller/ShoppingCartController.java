@@ -1,12 +1,16 @@
 package com.sbungle.sbunglebe.domain.shoppingcart.controller;
 
+import com.sbungle.sbunglebe.domain.shoppingcart.dto.CartItemResponse;
 import com.sbungle.sbunglebe.domain.shoppingcart.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,7 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
-    // TODO: 장바구니 목록 조회
+    @Operation(summary = "유저의 장바구니 목록 조회")
+    @GetMapping("")
+    public ResponseEntity<List<CartItemResponse>> getShoppingCart(@AuthenticationPrincipal User currentUser) {
+        String userId = currentUser.getUsername();
+        log.debug("장바구니 목록 조회 userID: {}", userId);
+        return ResponseEntity.ok(shoppingCartService.getCartItems(userId));
+    }
 
     @Operation(summary = "장바구니 품목 추가 및 수량 증가")
     @PostMapping("/{bookId}")
@@ -25,7 +35,7 @@ public class ShoppingCartController {
         String userId = currentUser.getUsername();
         log.debug("장바구니 품목 추가 userID: {}, bookID; {}", userId, bookId);
         shoppingCartService.addOrIncreaseItem(userId, bookId);
-    }
+}
 
     @Operation(summary = "장바구니 수량 감소")
     @DeleteMapping("/{shoppingCartId}")

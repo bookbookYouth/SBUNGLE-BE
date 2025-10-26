@@ -1,6 +1,8 @@
 package com.sbungle.sbunglebe.domain.shoppingcart.service;
 
+import com.sbungle.sbunglebe.domain.book.reader.BookReader;
 import com.sbungle.sbunglebe.domain.book.validator.BookValidator;
+import com.sbungle.sbunglebe.domain.shoppingcart.dto.CartItemResponse;
 import com.sbungle.sbunglebe.domain.shoppingcart.entity.ShoppingCart;
 import com.sbungle.sbunglebe.domain.shoppingcart.exception.ShoppingCartErrorCode;
 import com.sbungle.sbunglebe.domain.shoppingcart.exception.ShoppingCartException;
@@ -9,6 +11,8 @@ import com.sbungle.sbunglebe.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,6 +23,15 @@ public class ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final BookValidator bookValidator;
     private final UserService userService;
+    private final BookReader bookReader;
+
+    public List<CartItemResponse> getCartItems(String userId) {
+        userService.findUserByIdOrThrow(userId);
+
+        return shoppingCartRepository.findByUserId(userId).stream().map(
+                shoppingCart -> CartItemResponse.of(shoppingCart, bookReader.getBookByBookId(shoppingCart.getBookId()))
+        ).toList();
+    }
 
     @Transactional
     public void addOrIncreaseItem(String userId, String bookId) {
