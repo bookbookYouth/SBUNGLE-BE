@@ -57,4 +57,9 @@ public class UserService {
         return SimpleUserInfoResponse.from(user);
     }
 
+    public String getNickNameByUserId(String userId) {
+        UserEntity user = findUserByIdOrThrow(userId);
+        return user.getNickName();
+    }
+
 }

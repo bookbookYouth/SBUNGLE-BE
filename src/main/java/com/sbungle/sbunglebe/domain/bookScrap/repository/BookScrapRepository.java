@@ -15,7 +15,7 @@ public interface BookScrapRepository extends JpaRepository<BookScrap, Long> {
     FROM BookScrap bs
     WHERE bs.userId = :userId
     """)
-    List<BookScrap> findBookIdByUserId(String userId);
+    List<String> findBookIdByUserId(String userId);
 
     Boolean existsByUserIdAndBookId(String userId, String bookId);
 }

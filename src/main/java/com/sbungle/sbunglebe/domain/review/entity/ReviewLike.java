@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "review_likes")
-public class ReviewLikeEntity extends BaseTimeEntity {
+public class ReviewLike extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -28,15 +28,15 @@ public class ReviewLikeEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private LikeType likeType;
 
-    public static ReviewLikeEntity createReviewLike(String userId, String reviewId, LikeType likeType) {
-        return ReviewLikeEntity.builder()
+    public static ReviewLike createReviewLike(String userId, String reviewId, LikeType likeType) {
+        return ReviewLike.builder()
                 .userId(userId)
                 .reviewId(reviewId)
                 .likeType(likeType)
                 .build();
     }
     @Builder(access = AccessLevel.PRIVATE)
-    private ReviewLikeEntity(String userId, String reviewId, LikeType likeType) {
+    private ReviewLike(String userId, String reviewId, LikeType likeType) {
         this.likeId = java.util.UUID.randomUUID().toString();
         this.userId = userId;
         this.reviewId = reviewId;
