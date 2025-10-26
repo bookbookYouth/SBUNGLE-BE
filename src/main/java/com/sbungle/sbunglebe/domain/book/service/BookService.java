@@ -60,7 +60,7 @@ public class BookService {
         );
 
         List<BookCardVo> bookVos = books.getContent().stream()
-                .map(BookCardVo::from)
+                .map( book -> BookCardVo.of(book, bookScrapValidator.existsByUserIdAndBookId(userId, book.getBookId())))
                 .toList();
 
         PageInfo pageInfo = PageInfo.of(books.getNumber(), books.getSize(), (int) books.getTotalElements(), books.getTotalPages());

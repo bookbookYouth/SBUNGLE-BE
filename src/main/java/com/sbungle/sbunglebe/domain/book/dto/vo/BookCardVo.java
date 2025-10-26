@@ -12,6 +12,7 @@ public class BookCardVo {
     private String title;
     private String category;
     private PriceFormatter price;
+    private boolean isScrap;
 
     public static BookCardVo from(Book book) {
         return BookCardVo.builder()
@@ -19,6 +20,17 @@ public class BookCardVo {
                 .title(book.getTitle())
                 .category(book.getGenre().getDescription())
                 .price(new PriceFormatter(book.getPrice()))
+                .isScrap(true) //추후 수정
+                .build();
+    }
+
+    public static BookCardVo of(Book book, boolean isScrap) {
+        return BookCardVo.builder()
+                .bookId(book.getBookId())
+                .title(book.getTitle())
+                .category(book.getGenre().getDescription())
+                .price(new PriceFormatter(book.getPrice()))
+                .isScrap(isScrap)
                 .build();
     }
 }
