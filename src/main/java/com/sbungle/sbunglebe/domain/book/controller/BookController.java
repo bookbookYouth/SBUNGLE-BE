@@ -50,10 +50,27 @@ public class BookController {
             @RequestParam int size
             ) {
         String userId = currentUser.getUsername();
-        log.debug("도서 리스트 조회 userID: {}", userId);
+        log.debug("도서 리스트 조회(구매) userID: {}", userId);
 
         BookListResponse response = bookService.getBookList(userId, sortType, genres, mood, Optional.ofNullable(storeId), page, size);
 
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "책 리스트 조회 및 필터링 (선물)")
+    @GetMapping("/presents")
+    public ResponseEntity<BookListResponse> bookListForPresent(
+            @AuthenticationPrincipal User currentUser,
+            @RequestParam(required = false) List<String> sex,
+            @RequestParam(required = false) List<String> age,
+            @RequestParam(required = false) List<String> relationship,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        String userId = currentUser.getUsername();
+        log.debug("도서 리스트 조회(선물) userID: {}", userId);
+
+        BookListResponse response = bookService.getBookListForPresent(userId, sex, age, relationship, page, size);
+       return ResponseEntity.ok(response);
     }
 }
