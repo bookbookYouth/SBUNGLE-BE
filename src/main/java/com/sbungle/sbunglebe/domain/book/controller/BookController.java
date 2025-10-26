@@ -52,7 +52,7 @@ public class BookController {
         String userId = currentUser.getUsername();
         log.debug("도서 리스트 조회 userID: {}", userId);
 
-        bookService.getBookList(userId, sortType, genres, mood, Optional.ofNullable(storeId), page, size);
+        BookListResponse response = bookService.getBookList(userId, sortType, genres, mood, Optional.ofNullable(storeId), page, size);
 
         return ResponseEntity.ok(response);
     }
