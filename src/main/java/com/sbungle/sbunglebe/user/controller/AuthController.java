@@ -49,14 +49,7 @@ public class AuthController {
                 .build();
     }
 
-    private final TestLoginService testLoginService;
 
-    /**
-     * 무조건 PK id=1 유저로 액세스 토큰 발급 (개발/로컬 전용)
-     */
-    @PostMapping("/test-login")
-    public ResponseEntity<TestLoginService.TestLoginResult> testLogin() {
-        return ResponseEntity.ok(testLoginService.issueAccessTokenForUserId1());
-    }
+
 
 }
