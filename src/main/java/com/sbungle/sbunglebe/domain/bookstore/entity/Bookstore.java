@@ -59,7 +59,9 @@ public class Bookstore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        return false;
+        Bookstore bookstore = (Bookstore) o;
+        return id != null && id.equals(bookstore.id);
+    }
     }
 
     @Override
