@@ -42,7 +42,6 @@ public class Bookstore extends BaseTimeEntity {
     @OneToMany(
             mappedBy = "bookstore",
             cascade = CascadeType.ALL)
-    @Column(name = "books")
     private Set<Book> books;
 
     @ElementCollection
