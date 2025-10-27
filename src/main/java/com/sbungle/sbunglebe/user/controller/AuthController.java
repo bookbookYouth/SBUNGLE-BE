@@ -23,7 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
 
-//    @GetMapping("/login/kakao")
+    //    @GetMapping("/login/kakao")
     @PostMapping("/login/kakao")
     public ResponseEntity<SocialLoginResponse> kakaoLogin(
             @RequestParam("code") String accessCode
@@ -48,5 +48,8 @@ public class AuthController {
                 .maxAge(Duration.ofHours(1))
                 .build();
     }
+
+
+
 
 }

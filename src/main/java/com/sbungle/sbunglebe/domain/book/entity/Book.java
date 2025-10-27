@@ -1,5 +1,6 @@
 package com.sbungle.sbunglebe.domain.book.entity;
 
+import com.sbungle.sbunglebe.domain.bookstore.entity.Bookstore;
 import com.sbungle.sbunglebe.global.domain.BaseTimeEntity;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredGenre;
 import com.sbungle.sbunglebe.user.domain.enums.PreferredType;
@@ -59,8 +60,6 @@ public class Book extends BaseTimeEntity {
 
     @Column(name = "present_count")
     private int presentCount;
-
-
 
     public void increaseLikeCount() { this.likeCount++; }
 
