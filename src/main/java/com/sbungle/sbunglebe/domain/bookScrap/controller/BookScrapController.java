@@ -1,7 +1,6 @@
 package com.sbungle.sbunglebe.domain.bookScrap.controller;
 
-import com.sbungle.sbunglebe.domain.book.dto.vo.BookScrapVo;
-import com.sbungle.sbunglebe.domain.bookScrap.entity.BookScrap;
+import com.sbungle.sbunglebe.domain.book.dto.vo.BookCardVo;
 import com.sbungle.sbunglebe.domain.bookScrap.service.BookScrapService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -43,10 +42,10 @@ public class BookScrapController {
 
     @Operation(summary = "블라인드 북 스크랩 리스트 조회")
     @GetMapping("")
-    public ResponseEntity<List<BookScrapVo>> bookScrapList(@AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<List<BookCardVo>> bookScrapList(@AuthenticationPrincipal User currentUser) {
         String userId = currentUser.getUsername();
 
-        List<BookScrapVo> responses = bookScrapService.getBookScrapList(userId);
+        List<BookCardVo> responses = bookScrapService.getBookScrapList(userId);
         return ResponseEntity.ok(responses);
     }
 

@@ -1,7 +1,6 @@
 package com.sbungle.sbunglebe.domain.bookScrap.service;
 
-import com.sbungle.sbunglebe.domain.book.dto.vo.BookScrapVo;
-import com.sbungle.sbunglebe.domain.book.reader.BookReader;
+import com.sbungle.sbunglebe.domain.book.dto.vo.BookCardVo;
 import com.sbungle.sbunglebe.domain.book.service.BookService;
 import com.sbungle.sbunglebe.domain.book.validator.BookValidator;
 import com.sbungle.sbunglebe.domain.bookScrap.Reader.BookScrapReader;
@@ -47,7 +46,7 @@ public class BookScrapService {
         bookService.decreaseScrapCount(bookId);
     }
 
-    public List<BookScrapVo> getBookScrapList(String userId) {
+    public List<BookCardVo> getBookScrapList(String userId) {
         userService.findUserByIdOrThrow(userId);
 
         return bookScrapRepository.findBookIdByUserId(userId).stream().map(
