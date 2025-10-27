@@ -16,8 +16,20 @@ public interface BookstoreRepository extends JpaRepository<Bookstore, Long> {
     order by e.likeCount desc
     limit 5      
     """)
-    public List<BestBookstoreResponseDto> getBookstoreByLikeCount();
+    public List<Bookstore> getBookstoreByLikeCount();
 
-    @Query(value = "SELECT id, image_url, name, address, case when bl.id is not null then 1 else 0 end as likeflag FROM bookstore b INNER JOIN bookstorelike bl ON b.id = bl.bookstoreId ORDER BY RANDOM() LIMIT 5", nativeQuery = true)
-    List<RecommandBookstoreResponseDto> findRandomIds();
+    @Query(value = """
+    SELECT b.id AS id,
+           b.image_url AS imageUrl,
+           b.name AS name,
+           b.address AS address,
+           CASE WHEN bl.id IS NOT NULL THEN true ELSE false END AS isLike
+    FROM bookstore b
+    LEFT JOIN bookstore_like bl ON b.id = bl.bookstore_id
+    ORDER BY RANDOM()
+    LIMIT 4
+""", nativeQuery = true)
+    List<RecommandBookstoreResponseDto> findRandomBookstores();
+
+
 }

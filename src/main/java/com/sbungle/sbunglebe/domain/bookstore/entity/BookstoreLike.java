@@ -16,11 +16,12 @@ public class BookstoreLike {
     public Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    public UserEntity user;
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "bookstoreId")
-    public Bookstore bookstore;
+    @JoinColumn(name = "bookstore_id")
+    private Bookstore bookstore;
+
 
 }

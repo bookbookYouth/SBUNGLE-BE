@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,13 +29,14 @@ public class BookstoreService {
     private final UserRepository userRepository;
 
     public List<BestBookstoreResponseDto> getBestBookstoreList() {
-
-        return bookstoreRepository.getBookstoreByLikeCount();
+        return bookstoreRepository.getBookstoreByLikeCount().stream().map(
+                BestBookstoreResponseDto::from
+        ).toList();
     }
 
     public List<RecommandBookstoreResponseDto> getRecommandBookstoreList(User currentUser) {
 
-        return bookstoreRepository.findRandomIds();
+        return bookstoreRepository.findRandomBookstores();
     }
 
     public Bookstore getBookstoreDetail(User currentUser, Long bookstoreId) {
@@ -42,21 +44,21 @@ public class BookstoreService {
                 .orElseThrow(() -> new BookException(BookErrorCode.NOT_FOUND_BOOKSTORE));
     }
 
+    @Transactional
     public void flipBookstoreLikeFlag(User currentUser, Long bookstoreId) {
         UserEntity user = userRepository.findByUserId(currentUser.getUsername())
                 .orElseThrow(() -> new BookException(BookErrorCode.NOT_FOUND_USER));
         Bookstore bookstore = bookstoreRepository.findById(bookstoreId)
                 .orElseThrow(() -> new BookException(BookErrorCode.NOT_FOUND_BOOKSTORE));
-        Optional<BookstoreLike> bookstoreLike = bookstoreLikeRepository.findById(bookstoreId);
-
-        if(bookstoreLike.isPresent()) {
-            bookstoreLikeRepository.delete(bookstoreLike.get());
-        }
-        else  {
-            bookstoreLikeRepository.save(BookstoreLike.builder()
-                    .user(user)
-                    .bookstore(bookstore)
-                    .build());
-        }
+        bookstoreLikeRepository.findByBookstoreIdAndUserId(bookstoreId, user.getId())
+                .ifPresentOrElse(
+                        bookstoreLikeRepository::delete,
+                        () -> bookstoreLikeRepository.save(
+                                BookstoreLike.builder()
+                                        .user(user)
+                                        .bookstore(bookstore)
+                                        .build()
+                        )
+                );
     }
 }

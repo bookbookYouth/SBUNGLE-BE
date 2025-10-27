@@ -22,6 +22,9 @@ public class Bookstore {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "bookstore_id", unique = true, nullable = false, length = 100)
+    private String bookstoreId;
+
     @Column(name = "name")
     private String name;
 

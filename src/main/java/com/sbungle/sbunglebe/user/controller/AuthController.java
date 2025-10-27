@@ -23,7 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
 
-//    @GetMapping("/login/kakao")
+    //    @GetMapping("/login/kakao")
     @PostMapping("/login/kakao")
     public ResponseEntity<SocialLoginResponse> kakaoLogin(
             @RequestParam("code") String accessCode
@@ -47,6 +47,16 @@ public class AuthController {
                 .sameSite("Lax")
                 .maxAge(Duration.ofHours(1))
                 .build();
+    }
+
+    private final TestLoginService testLoginService;
+
+    /**
+     * 무조건 PK id=1 유저로 액세스 토큰 발급 (개발/로컬 전용)
+     */
+    @PostMapping("/test-login")
+    public ResponseEntity<TestLoginService.TestLoginResult> testLogin() {
+        return ResponseEntity.ok(testLoginService.issueAccessTokenForUserId1());
     }
 
 }
