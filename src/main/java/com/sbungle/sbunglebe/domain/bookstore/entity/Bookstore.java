@@ -66,4 +66,15 @@ public class Bookstore {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    public void increaseLikeCount() {
+        if (this.likeCount == null) this.likeCount = 0;
+        this.likeCount++;
+    }
+
+    public void decreaseLikeCount() {
+        if (this.likeCount != null && this.likeCount > 0) {
+            this.likeCount--;
+        }
+    }
 }

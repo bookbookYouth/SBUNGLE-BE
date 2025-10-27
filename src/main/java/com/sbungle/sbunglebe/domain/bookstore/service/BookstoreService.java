@@ -36,7 +36,10 @@ public class BookstoreService {
 
     public List<RecommandBookstoreResponseDto> getRecommandBookstoreList(User currentUser) {
 
-        return bookstoreRepository.findRandomBookstores();
+        UserEntity user = userRepository.findByUserId(currentUser.getUsername())
+                .orElseThrow(() -> new BookException(BookErrorCode.NOT_FOUND_USER));
+
+        return bookstoreRepository.findRandomBookstores(user.getId());
     }
 
     public Bookstore getBookstoreDetail(User currentUser, Long bookstoreId) {
@@ -48,17 +51,28 @@ public class BookstoreService {
     public void flipBookstoreLikeFlag(User currentUser, Long bookstoreId) {
         UserEntity user = userRepository.findByUserId(currentUser.getUsername())
                 .orElseThrow(() -> new BookException(BookErrorCode.NOT_FOUND_USER));
+
         Bookstore bookstore = bookstoreRepository.findById(bookstoreId)
                 .orElseThrow(() -> new BookException(BookErrorCode.NOT_FOUND_BOOKSTORE));
+
         bookstoreLikeRepository.findByBookstoreIdAndUserId(bookstoreId, user.getId())
                 .ifPresentOrElse(
-                        bookstoreLikeRepository::delete,
-                        () -> bookstoreLikeRepository.save(
-                                BookstoreLike.builder()
-                                        .user(user)
-                                        .bookstore(bookstore)
-                                        .build()
-                        )
+                        bookstoreLike -> {
+                            bookstoreLikeRepository.delete(bookstoreLike);
+                            bookstore.decreaseLikeCount();
+                        },
+                        () -> {
+                            bookstoreLikeRepository.save(
+                                    BookstoreLike.builder()
+                                            .user(user)
+                                            .bookstore(bookstore)
+                                            .build()
+                            );
+                            bookstore.increaseLikeCount();
+                        }
                 );
+
+        bookstoreRepository.save(bookstore);
     }
+
 }
