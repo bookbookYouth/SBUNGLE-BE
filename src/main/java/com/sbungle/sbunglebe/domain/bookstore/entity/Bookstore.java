@@ -1,6 +1,7 @@
 package com.sbungle.sbunglebe.domain.bookstore.entity;
 
 import com.sbungle.sbunglebe.domain.book.entity.Book;
+import com.sbungle.sbunglebe.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 @Entity
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bookstore {
+public class Bookstore extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -56,15 +58,6 @@ public class Bookstore {
     private Integer likeCount;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bookstore bookstore = (Bookstore) o;
-        return id != null && id.equals(bookstore.id);
-    }
-    }
-
-    @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
@@ -79,4 +72,18 @@ public class Bookstore {
             this.likeCount--;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bookstore bookstore = (Bookstore) o;
+        return id != null && id.equals(bookstore.id);
+    }
 }
+
+
+
+
+
+
