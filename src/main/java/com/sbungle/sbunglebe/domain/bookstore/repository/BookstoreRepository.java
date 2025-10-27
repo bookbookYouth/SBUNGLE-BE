@@ -3,7 +3,7 @@ package com.sbungle.sbunglebe.domain.bookstore.repository;
 import com.sbungle.sbunglebe.domain.bookstore.dto.response.BestBookstoreResponseDto;
 import com.sbungle.sbunglebe.domain.bookstore.dto.response.RecommandBookstoreResponseDto;
 import com.sbungle.sbunglebe.domain.bookstore.entity.Bookstore;
-import feign.Param;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
