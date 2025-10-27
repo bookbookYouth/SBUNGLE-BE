@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class BookstoreLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -22,6 +23,5 @@ public class BookstoreLike {
     @ManyToOne
     @JoinColumn(name = "bookstore_id")
     private Bookstore bookstore;
-
 
 }
