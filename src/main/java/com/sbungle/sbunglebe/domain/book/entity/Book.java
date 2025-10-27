@@ -61,10 +61,6 @@ public class Book extends BaseTimeEntity {
     @Column(name = "present_count")
     private int presentCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookstore_id")
-    private Bookstore bookstore;
-
     public void increaseLikeCount() { this.likeCount++; }
 
     public void decreaseLikeCount() {
