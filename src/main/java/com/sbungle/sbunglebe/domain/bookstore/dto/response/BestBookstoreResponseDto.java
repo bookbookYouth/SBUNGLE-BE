@@ -7,7 +7,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-@Getter
 public class BestBookstoreResponseDto {
 
     private Long id;
