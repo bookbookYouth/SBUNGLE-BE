@@ -75,4 +75,13 @@ public class BookstoreService {
         bookstoreRepository.save(bookstore);
     }
 
+    public String getStoreNameByStoreId(String storeId) {
+        Bookstore bookstore = bookstoreRepository.findByBookstoreId(storeId).orElseThrow(
+                () -> new BookException(BookErrorCode.NOT_FOUND_BOOKSTORE)
+        );
+
+        return bookstore.getName();
+
+    }
+
 }

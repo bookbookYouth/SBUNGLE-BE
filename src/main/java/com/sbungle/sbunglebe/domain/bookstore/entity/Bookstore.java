@@ -39,11 +39,6 @@ public class Bookstore extends BaseTimeEntity {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @OneToMany(
-            mappedBy = "bookstore",
-            cascade = CascadeType.ALL)
-    private Set<Book> books;
-
     @ElementCollection
     @CollectionTable(name = "operating_date", joinColumns = @JoinColumn(name = "store_id"))
     @MapKeyColumn(name = "day")
