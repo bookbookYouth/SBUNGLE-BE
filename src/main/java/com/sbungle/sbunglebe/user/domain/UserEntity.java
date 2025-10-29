@@ -1,5 +1,6 @@
 package com.sbungle.sbunglebe.user.domain;
 
+import com.sbungle.sbunglebe.global.domain.BaseTimeEntityWithDeletion;
 import com.sbungle.sbunglebe.user.domain.enums.*;
 import com.sbungle.sbunglebe.user.domain.enums.Role;
 import com.sbungle.sbunglebe.user.domain.enums.SocialLoginType;
@@ -21,7 +22,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "`user`")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class UserEntity {
+public class UserEntity extends BaseTimeEntityWithDeletion {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
